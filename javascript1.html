@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>JavaScript</title>
+        <style>
+            div.a {
+                /* a class를 가진 div  */
+                font-size: 1.5rem;
+            }
+
+            div .a {
+                /* div의 후손 중에서 a class를 가진 태그*/
+                color: green;
+            }
+
+            div > .a {
+                /* div의 자식 중에서 a class를 가진 태그*/
+                color: orange;
+            }
+
+            .blue {
+                color: blue;
+            }
+
+            
+        </style>
+    </head>
+    <body>
+        <div class="s">
+            <div class="a">
+                <div id="b1">
+                    안녕하세요
+                </div>
+                <div id="b2">
+                    선택자 수업입니다
+                </div>
+            </div>
+            <div class="a b">
+                <div>
+                    안녕1
+                </div>
+                <div>
+                    안녕2
+                </div>
+            </div>
+        </div>
+        <input type="text" id="name" name="name" value="홍길동">
+        <button onclick="button_event();">실행</button>
+
+        <script>
+            // SELECTOR
+
+            // 1) getElementById
+            var select1 = document.getElementById('b1').innerHTML.trim();
+            
+            // 2) getElementsByClassName
+            // class는 여러개 이므로 배열로 인덱스를 선택해주어야 함
+            var select2 = document.getElementsByClassName('s')[0].innerHTML;
+            var select3 = document.getElementsByClassName('s')[0].innerText;
+
+            // 3) getElementsByName
+            var select4 = document.getElementsByName('name')[0].value;
+
+            // 4) getElementsByTagName
+            var select5 = document.getElementsByTagName('div');
+            var select6 = document.getElementsByTagName('div')[0];
+
+
+            console.log(select1);
+            console.log(select2);
+            console.log(select3);
+            console.log(select4);
+            console.log(select5);
+            console.log(select6);
+
+            document.getElementById('b1').innerHTML ="안녕"
+
+
+            // 5) querySelector 
+            // 인자로 선택자를 받음 -> 해당 선택자가 여러 개인 경우 첫번째 선택자에 해당되는 것을 가져옴 
+            var select7 = document.querySelector(".a").innerHTML;
+            var select8 = document.querySelector(".a.b").innerHTML; // .a.b를 class로 갖는 div만 가져옴
+            
+            // 6) querySelectorAll
+            // 배열
+            var select9 = document.querySelectorAll(".a")[1].innerHTML;
+            var select10 = document.querySelectorAll(".a")[0].innerText;
+            
+
+            console.log(select7);
+            console.log(select8);
+            console.log(select9);
+            console.log(select10);
+
+        </script>
+    </body>
+</html>

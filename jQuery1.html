@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <meta charset="UTF-8">
+        <title>JQUERY</title>
+    </head>
+    <body>
+        <div class="parent">
+            <div class="child1">
+                <div>
+                    자식1
+                </div>
+            </div>
+            <div class="child2">
+                <div>
+                    자식2
+                </div>
+            </div>
+        </div>
+        <div class="parent">
+            <div class="child1">
+                <div>
+                    자식1
+                </div>
+            </div>
+            <div class="child2">
+                <div>
+                    자식222
+                </div>
+            </div>
+        </div>
+
+        <input type="text" id="name" name="test" value="홍길동">
+        <button onclick="button_event();">실행</button>
+
+        <script>
+            // JS - getElementsByClassName
+            var js1 = document.getElementsByClassName("parent")[0].innerHTML;
+            console.log(js1);
+            
+            // JQUERY
+            var select1 = $(".parent"); // js의 querySelectAll()의 기능
+            var select2 = $(".parent").html(); // .html(): .innerHTML (in JS)와 유사
+            var select3 = $( $(".parent")[1] ).html(); // 두번째 .parent를 가져와 html 태그를 보여줌
+            var select4 = $(".parent > .child1" ).html(); 
+            var select5 = $(".parent > .child1" ).html("orange"); // 인자 있음: 인자로 태그 안의 내용을 변경 
+            console.log(select1);
+            console.log(select2);
+            console.log(select3);
+            console.log(select4);
+            console.log(select5);
+
+
+            // JS - getElementsByName
+            var js2 = document.getElementsByName('test')[0].value;
+            console.log(js2)
+
+            // JQUERY
+            var select6 = $("input[name=test]").val(); // 인자 없음: 원래의 value 값을 가져옴
+            var select7 = $("input[name=test]").val("banana"); // 인자 있음: 인자로 vlaue 값을 변경함 
+            console.log(select6)
+            console.log(select7)
+
+            
+            // btn 클릭시 input의 value값 변경하는 함수 
+            function button_event() {
+                $( "input[name=test]" ).val( "apple" );
+            }
+        </script>
+    </body>
+</html>

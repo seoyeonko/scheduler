@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+        <meta charset="UTF-8">
+        <title>JQUERY</title>
+    </head>
+    <body>
+        <div class="parent">
+            <div class="child1">
+                <!-- <div>자식1</div> -->
+                자식1
+            </div>
+            <div class="child2">
+                    자식2
+            </div>
+            <div class="child3">
+                    자식3
+            </div>
+            <div class="child4">
+                    자식4
+            </div>
+        </div>
+        
+
+        <input class="d-none" type="text" id="name" name="test" value="홍길동">
+        <button onclick="button_event1();">실행1</button>
+        <button onclick="button_event2();">실행2</button>
+        <button onclick="button_event3();">실행3</button>
+
+        <script>
+            // Childeren
+            console.log($(".parent").children()); // parent의 자식을 선택
+            console.log($(".parent").children(".child1")); // parent의 자식만을 선택 (단, child1 class)
+            console.log($(".parent").children()[0]); 
+            console.log($($(".parent").children()[1]).html().trim()); 
+
+            // Parent
+            // 바로 위의 부모 "하나"만 가져옴
+            console.log($(".child1").parent()); // div.parent
+            // 부모를 포함한 조상들까지 모두 가져옴 (html 태그까지)
+            console.log($(".child1").parents()); // div.parent, body, html
+
+
+
+            function button_event1() {
+                $(".child1").append("<div>2</div>") // append(): 인자를 선택자 안에서 "가장 마지막 요소"로 추가 
+                $(".child1").prepend("<div>0</div>") // prepend(): 인자를 선택자 안에서 "가장 처음 요소"로 추가 
+                $(".child1").before("<div>apple</div>") // before(): 인자를 선택자의 앞에 추가 (같은 level에서)
+                $(".child1").after("<div>banana</div>") // after(): 인자를 선택자의 뒤에 추가 (같은 level에서)
+                $(".child3").remove() // remove(): 선택자에 해당하는 요소를 지움 
+                $(".child4").html("") // html(""): 선택자 안을 지움 (선택자 요소는 남아있음)
+            
+                
+            }
+            
+            function button_event2() {
+                if ($("#name").hasClass("d-none")) {
+                    $("#name").removeClass();
+                }
+                else {
+                    $("#name").addClass("d-none");
+                }
+            }
+
+            function button_event3() {
+                $(".child2").css({"color":"white", "font-weight":"bold", "background-color":"green"});
+            }
+
+        </script>
+    </body>
+</html>
