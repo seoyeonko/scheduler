@@ -62,8 +62,8 @@
     </div>
 
     <div class="d-none mb-3" id="edit_box">
-      <input id="toDo_edit" type="text" />
-      <button onclick="schedule_edit();">내용 수정</button>
+      <input id="toDo_edit" type="text" placeholder="일정을 변경하세요" />
+      <!-- <button onclick="schedule_edit();">내용 수정</button> -->
     </div>
 
     <div class="month">
@@ -89,7 +89,7 @@
         $($("#" + day).children()[1]).append(
           "<div class='todoItem'>" +
             $("#toDo").val() +
-            "<button onclick='schedule_showInput();' >수정</button>" +
+            "<button onclick='schedule_edit(this);' >수정</button>" +
             "<button onclick='schedule_rmTodo(this);' >삭제</button>" +
             "</div>"
         );
@@ -101,33 +101,29 @@
         $($("#" + day).children()[1]).html("");
       }
 
-      // [수정 버튼] - 수정 input과 수정 button 표시
-      function schedule_showInput() {
+      // [수정 버튼] - 스케줄 수정 & input창 가리기
+      function schedule_edit(obj) {
         if ($("#edit_box").hasClass("d-none")) {
           $("#edit_box").removeClass("d-none");
         } else {
           $("#edit_box").addClass("d-none");
         }
-      }
 
-      // [내용수정 버튼] - 스케줄 수정 & input창 가리기
-      function schedule_edit() {
-        // 스케줄 수정
-        var editTodo = $("#toDo_edit").val();
-        $(".todoItem").html(
-          editTodo +
-            "<button onclick='schedule_showInput();'>수정</button>" +
-            "<button onclick='schedule_rmTodo(this);' >삭제</button>"
-        );
-
-        // input 창 가리기
-        schedule_showInput();
+        // 내용 수정
+        //var editTodo = ;
+        $(obj)
+          .parent()
+          .html(
+            $("#toDo_edit").val() +
+              "<button onclick='schedule_edit(this);'>수정</button>" +
+              "<button onclick='schedule_rmTodo(this);' >삭제</button>"
+          );
       }
 
       // [삭제 버튼] - 해당 일정 한 개를 삭제
       function schedule_rmTodo(obj) {
         // this == obj
-        // this의 parent가 div 이므로 부모요소를 삭제해야 todo 요소가 삭제됨
+        // this의 parent가 div.todoItem 이므로 부모요소를 삭제해야 todo 요소가 삭제됨
         $(obj).parent().remove();
       }
     </script>
