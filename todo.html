@@ -25,40 +25,6 @@
     <meta charset="UTF-8" />
     <title>TODO</title>
     <style>
-      /* 
-      
-      .month > div {
-        display: inline-block;
-        width: 200px;
-        height: 200px;
-        vertical-align: top;
-        background-color: #eaeaea;
-        border: 1px solid black;
-      }
-
-      .month > div > div:nth-child(1) {
-        width: 100%;
-        background-color: white;
-        text-align: center;
-      }
-
-      .month > div > div:nth-child(2) {
-        padding: 5px;
-        overflow-y: auto;
-        height: 160px;
-      }
-
-      .todoItem {
-        margin-top: 5px;
-        padding: 5px;
-        background-color: rgb(162, 226, 147);
-        font-weight: bold;
-      }
-      .todoItem:hover {
-        background-color: rgb(162, 226, 200);
-      }
-
-      */
       html,
       body {
         height: 100vh;
@@ -157,9 +123,9 @@
             .children()
             .children()[1]
         ).append(
-          "<div class='todoItem shadow-sm rounded p-1 my-2'>" +
-            "<div class='row m-1'>" +
-            "<span class='col-8'>" +
+          "<div class='todoItem shadow-sm rounded p-1 my-2'>" + // lavel 1
+            "<div class='row m-1'>" + // lavel 2
+            "<span class='col-8'>" + // lavel 3
             $("#toDo").val() +
             "</span>" +
             "<button class='col-2 btn btn-light' onclick='schedule_showInput(this);' ><i class='bi bi-pen'></i></button>" +
@@ -172,12 +138,16 @@
       // [전체삭제 버튼] - 해당 날짜에 "전체 일정" 삭제
       function schedule_remove() {
         var day = $("#date").val();
-        $($("#" + day).children()[1]).html("");
+        $(
+          $("#" + day)
+            .children()
+            .children()[1]
+        ).html("");
       }
 
       // [수정 버튼] - 수정 input과 수정 button 표시
       function schedule_showInput(obj) {
-        editTodo = $(obj).parent(); // div.todoItem -> schedule_edit()에서 사용
+        editTodo = $(obj).parent().parent(); // div.todoItem -> schedule_edit()에서 사용
         if ($("#edit_box").hasClass("d-none")) {
           $("#edit_box").removeClass("d-none");
         } else {
@@ -188,11 +158,17 @@
       // [내용수정 버튼] - 스케줄 수정 & input창 가리기
       function schedule_edit() {
         // 스케줄 수정
-        $(editTodo).html(
-          $("#toDo_edit").val() +
-            "<button class='btn btn-light' onclick='schedule_showInput(this);'><i class='bi bi-pen'></i></button>" +
-            "<button class='btn btn-light' onclick='schedule_rmTodo(this);' ><i class='bi bi-trash'></i></button>"
-        );
+        // editTodo: div.todoItem
+
+        $(editTodo)
+          .children()
+          .html(
+            "<span class='col-8'>" + // lavel 3
+              $("#toDo_edit").val() +
+              "</span>" +
+              "<button class='col-2 btn btn-light' onclick='schedule_showInput(this);' ><i class='bi bi-pen'></i></button>" +
+              "<button class='col-2 btn btn-light' onclick='schedule_rmTodo(this);' ><i class='bi bi-trash'></i></button>"
+          );
 
         // input 창 가리기
         schedule_showInput();
@@ -202,7 +178,7 @@
       function schedule_rmTodo(obj) {
         // this == obj
         // this의 parent가 div 이므로 부모요소를 삭제해야 todo 요소가 삭제됨
-        $(obj).parent().remove();
+        $(obj).parent().parent().remove();
       }
     </script>
   </body>
