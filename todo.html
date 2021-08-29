@@ -21,6 +21,8 @@
     <meta charset="UTF-8" />
     <title>TODO</title>
     <style>
+      /* 
+      
       .month > div {
         display: inline-block;
         width: 200px;
@@ -51,33 +53,44 @@
       .todoItem:hover {
         background-color: rgb(162, 226, 200);
       }
+
+      */
     </style>
   </head>
   <body>
-    <div class="mb-3">
-      <input id="date" type="text" />
-      <input id="toDo" type="text" />
-      <button onclick="schedule_insert();">입력</button>
-      <button onclick="schedule_remove();">전체 삭제</button>
-    </div>
+    <div class="container">
+      <div class="row m-3">
+        <input class="col-5" id="date" type="number" placeholder="Day" />
+        <input class="col-5" id="toDo" type="text" placeholder="What I Have To Do " />
 
-    <div class="d-none mb-3" id="edit_box">
-      <input id="toDo_edit" type="text" />
-      <button onclick="schedule_edit();">내용 수정</button>
-    </div>
+        <button class="col-1" onclick="schedule_insert();">INPUT</button>
+        <button class="col-1" onclick="schedule_remove();">DELETE</button>
+      </div>
 
-    <div class="month">
-      <div id="1">
-        <div>1일</div>
-        <div></div>
+      <div class="d-none mb-3 row" id="edit_box">
+        <input class="col-11" id="toDo_edit" type="text" />
+        <button class="col-1" onclick="schedule_edit();">내용 수정</button>
       </div>
-      <div id="2">
-        <div>2일</div>
-        <div></div>
-      </div>
-      <div id="3">
-        <div>3일</div>
-        <div></div>
+
+      <div class="month row">
+        <div class="shadow-sm col-4" id="1">
+          <div class="m-1">
+            <div class="font-weight-bold">Day 01</div>
+            <div></div>
+          </div>
+        </div>
+        <div class="shadow-sm col-4" id="2">
+          <div class="m-1">
+            <div class="font-weight-bold">Day 02</div>
+            <div></div>
+          </div>
+        </div>
+        <div class="shadow-sm col-4" id="3">
+          <div class="m-1">
+            <div class="font-weight-bold">Day 03</div>
+            <div></div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -89,7 +102,11 @@
       function schedule_insert() {
         var day = $("#date").val();
         // 일정 추가 (수정/삭제 버튼 함께 삽입 )
-        $($("#" + day).children()[1]).append(
+        $(
+          $("#" + day)
+            .children()
+            .children()[1]
+        ).append(
           "<div class='todoItem'>" +
             $("#toDo").val() +
             "<button onclick='schedule_showInput(this);' >수정</button>" +
