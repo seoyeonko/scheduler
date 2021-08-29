@@ -53,10 +53,11 @@
         <div class="d-flex justify-content-center align-items-center">
           <h1 class="text-monospace font-weight-bold">Todo List</h1>
         </div>
+
         <!-- Input (Day / What I Have To Do) -->
         <div class="row my-3">
           <div class="col-5">
-            <input type="number" id="date" class="form-control" placeholder="Day" />
+            <input type="number" min="1" max="3" id="date" class="form-control" placeholder="Day" />
           </div>
           <div class="col-5">
             <input type="text" id="toDo" class="form-control" placeholder="What I Have To Do" />
@@ -80,7 +81,7 @@
             <input type="text" id="toDo_edit" class="form-control" placeholder="Edit Content" />
           </div>
           <div class="col-2">
-            <button class="w-100 btn btn-dark" onclick="schedule_edit();">
+            <button id="editBtn" class="w-100 btn btn-dark" onclick="schedule_edit();">
               <i class="bi bi-pen-fill"> Edit</i>
             </button>
           </div>
@@ -125,7 +126,7 @@
         ).append(
           "<div class='todoItem shadow-sm rounded p-1 my-2'>" + // lavel 1
             "<div class='row m-1'>" + // lavel 2
-            "<span class='col-8'>" + // lavel 3
+            "<span id='editTxt' class='col-8 '>" + // lavel 3
             $("#toDo").val() +
             "</span>" +
             "<button class='col-2 btn btn-light' onclick='schedule_showInput(this);' ><i class='bi bi-pen'></i></button>" +
@@ -133,6 +134,9 @@
             "</div>" +
             "</div>"
         );
+
+        // Input (What I Have To Do) 빈칸
+        $("#toDo").val("");
       }
 
       // [전체삭제 버튼] - 해당 날짜에 "전체 일정" 삭제
@@ -148,8 +152,14 @@
       // [수정 버튼] - 수정 input과 수정 button 표시
       function schedule_showInput(obj) {
         editTodo = $(obj).parent().parent(); // div.todoItem -> schedule_edit()에서 사용
+
         if ($("#edit_box").hasClass("d-none")) {
           $("#edit_box").removeClass("d-none");
+
+          // Input(#toDo_edit) 창에 수정할 txt 받아오기 + 포커싱
+          console.log($(editTodo.children().children()[0]).html());
+          $("#toDo_edit").val($(editTodo.children().children()[0]).html());
+          $("#toDo_edit").focus();
         } else {
           $("#edit_box").addClass("d-none");
         }
@@ -163,7 +173,7 @@
         $(editTodo)
           .children()
           .html(
-            "<span class='col-8'>" + // lavel 3
+            "<span id='editTxt' class='col-8'>" + // lavel 3
               $("#toDo_edit").val() +
               "</span>" +
               "<button class='col-2 btn btn-light' onclick='schedule_showInput(this);' ><i class='bi bi-pen'></i></button>" +
