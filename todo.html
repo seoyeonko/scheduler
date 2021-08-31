@@ -37,12 +37,28 @@
       .dayBox {
         height: 50vh;
       }
+      #todos {
+        padding: 5px;
+        overflow-y: auto;
+        height: 40vh;
+      }
+
       #dayN {
         font-size: 1.5rem;
       }
 
       .todoItem {
         background-color: #dedede;
+      }
+      .todoItem:hover {
+        font-weight: bold;
+        background-color: #eeddee;
+        box-shadow: 10px 10px 10px -5px;
+        transform: translate(-2px, -2px);
+      }
+
+      #editTxt {
+        line-height: 1.2rem;
       }
     </style>
   </head>
@@ -88,23 +104,23 @@
         </div>
 
         <!-- Todos -->
-        <div class="month row">
+        <div class="month row mt-5">
           <div class="col-4" id="1">
             <div class="dayBox p-4 shadow rounded-lg">
               <div id="dayN" class="font-weight-bold p-1">Day 01</div>
-              <div></div>
+              <div id="todos"></div>
             </div>
           </div>
           <div class="col-4" id="2">
             <div class="dayBox p-4 shadow rounded-lg">
               <div id="dayN" class="font-weight-bold p-1">Day 02</div>
-              <div></div>
+              <div id="todos"></div>
             </div>
           </div>
           <div class="col-4" id="3">
             <div class="dayBox p-4 shadow rounded-lg">
               <div id="dayN" class="font-weight-bold p-1">Day 03</div>
-              <div></div>
+              <div id="todos"></div>
             </div>
           </div>
         </div>
@@ -115,25 +131,47 @@
       // 수정할 일정
       var editTodo;
 
+      // Enter 키 입력 =  button 클릭
+      $("#toDo_edit").on("keyup", function (key) {
+        if (key.keyCode == 13) {
+          schedule_edit();
+        }
+      });
+
+      $("#toDo").on("keyup", function (key) {
+        if (key.keyCode == 13) {
+          schedule_insert();
+        }
+      });
+
       // [입력 버튼] - 해당 "날짜"에 "할일"을 추가
       function schedule_insert() {
         var day = $("#date").val();
+
         // 일정 추가 (수정/삭제 버튼 함께 삽입 )
-        $(
-          $("#" + day)
-            .children()
-            .children()[1]
-        ).append(
-          "<div class='todoItem shadow-sm rounded p-1 my-2'>" + // lavel 1
-            "<div class='row m-1'>" + // lavel 2
-            "<span id='editTxt' class='col-8 '>" + // lavel 3
-            $("#toDo").val() +
-            "</span>" +
-            "<button class='col-2 btn btn-light' onclick='schedule_showInput(this);' ><i class='bi bi-pen'></i></button>" +
-            "<button class='col-2 btn btn-light' onclick='schedule_rmTodo(this);' ><i class='bi bi-trash'></i></button>" +
-            "</div>" +
-            "</div>"
-        );
+        if ($("#date").val().trim() == "" || $("#toDo").val().trim() == "") {
+          alert("입력칸을 모두 채워주세요!");
+        } else {
+          $(
+            $("#" + day)
+              .children()
+              .children()[1]
+          ).append(
+            "<div class='todoItem shadow-sm rounded p-1 my-2'>" + // lavel 1
+              "<div class='row m-1 d-flex align-items-center'>" + // lavel 2
+              "<span id='editTxt' class='col-8 '>" + // lavel 3
+              $("#toDo").val() +
+              "</span>" +
+              "<button class='col-2 btn btn-light' onclick='schedule_showInput(this);' ><i class='bi bi-pen'></i></button>" +
+              "<button class='col-2 btn btn-light' onclick='schedule_rmTodo(this);' ><i class='bi bi-trash'></i></button>" +
+              "</div>" +
+              "</div>"
+          );
+        }
+
+        if ($("#date").val() < 1 || $("#date").val() > 3) {
+          alert("Day의 범위는 1~3 입니다!");
+        }
 
         // Input (What I Have To Do) 빈칸
         $("#toDo").val("");
@@ -143,7 +181,7 @@
       function schedule_remove() {
         var day = $("#date").val();
         $(
-          $("#" + day)
+          $("#" + day)2
             .children()
             .children()[1]
         ).html("");
